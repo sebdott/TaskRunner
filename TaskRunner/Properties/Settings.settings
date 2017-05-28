@@ -1,0 +1,15 @@
+﻿<?xml version='1.0' encoding='utf-8'?>
+<SettingsFile xmlns="http://schemas.microsoft.com/VisualStudio/2004/01/settings" CurrentProfile="(Default)" GeneratedClassNamespace="TaskRunner.Properties" GeneratedClassName="Settings">
+  <Profiles />
+  <Settings>
+    <Setting Name="PowershellScriptPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.\CakeScript\build.ps1</Value>
+    </Setting>
+    <Setting Name="ExecutionTimeOutInSeconds" Type="System.Int32" Scope="Application">
+      <Value Profile="(Default)">200</Value>
+    </Setting>
+    <Setting Name="CakeScriptPath" Type="System.String" Scope="Application">
+      <Value Profile="(Default)">.\CakeScript\build.cake</Value>
+    </Setting>
+  </Settings>
+</SettingsFile>

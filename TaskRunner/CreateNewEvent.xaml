@@ -1,0 +1,58 @@
+﻿<Window x:Class="TaskRunner.CreateNewEvent"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:TaskRunner"
+        mc:Ignorable="d"
+        Title="New Event" Height="481" Width="470" ResizeMode="NoResize" Closing="OnWindowClosing">
+    <Grid Width="470">
+        <TabControl x:Name="tcNewEvent" HorizontalAlignment="Left" Width="450" Margin="0,131,0,0" Height="316" VerticalAlignment="Top">
+            <TabItem x:Name="tbBuild" Header="Build">
+                <Grid>
+                    <Label Content="Solution Path :" HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="88"/>
+                    <TextBox x:Name="txtBuildSolutionPath" TextWrapping="Wrap" Margin="88,14,80,216" AutomationProperties.IsRequiredForForm="True"/>
+                    <Button x:Name="btnBuildSolutionPathBrowse" Content="Browse" Margin="369,13,10,216" Click="btnBuildSolutionPathBrowse_Click"/>
+                </Grid>
+            </TabItem>
+            <TabItem x:Name="tbCopy" Header="Copy">
+                <Grid>
+                    <Label Content="Is Direct Copy :" HorizontalAlignment="Left" Margin="5,10,0,0" VerticalAlignment="Top" Width="88"/>
+                    <CheckBox x:Name="chkIsDirectCopy" Content="" HorizontalAlignment="Left" Margin="93,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.583,1.956" AutomationProperties.IsRequiredForForm="True"/>
+                    <Label Content="Source Path :" HorizontalAlignment="Left" Margin="5,48,0,0" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.538,2.705"/>
+                    <TextBox x:Name="txtCopySourcePath" TextWrapping="Wrap" Margin="93,48,74,191" AutomationProperties.IsRequiredForForm="True"/>
+                    <Button x:Name="btnCopySourcePathBrowse" Content="Browse" Margin="382,48,10,191" RenderTransformOrigin="0.528,1.264" Click="btnCopySourcePathBrowse_Click"/>
+
+                    <Label Content="File Pattern :" HorizontalAlignment="Left" Margin="5,99,0,0" VerticalAlignment="Top" Width="93"/>
+                    <TextBox x:Name="txtCopyFilePattern" Height="23" TextWrapping="Wrap" Margin="93,102,10,163" AutomationProperties.IsRequiredForForm="True"/>
+                    <Label Content="Dest. Path :" HorizontalAlignment="Left" Margin="5,159,0,0" VerticalAlignment="Top" Width="88" RenderTransformOrigin="0.561,3.923"/>
+                    <TextBox x:Name="txtCopyDestinationPath" TextWrapping="Wrap" Margin="93,159,74,75"/>
+                    <Button x:Name="btnCopyDestinationPath" Content="Browse" Margin="382,157,10,77" RenderTransformOrigin="0.506,2.833" Click="btnCopyDestinationPath_Click"/>
+
+                    <Label Content="Folder Pattern :" HorizontalAlignment="Left" Margin="5,128,0,0" VerticalAlignment="Top" Width="88"/>
+                    <TextBox x:Name="txtCopyFolderPattern" Height="23" TextWrapping="Wrap" Margin="93,130,9,135" RenderTransformOrigin="0.5,0.5">
+                        <TextBox.RenderTransform>
+                            <TransformGroup>
+                                <ScaleTransform/>
+                                <SkewTransform/>
+                                <RotateTransform Angle="-0.132"/>
+                                <TranslateTransform/>
+                            </TransformGroup>
+                        </TextBox.RenderTransform>
+                    </TextBox>
+
+                </Grid>
+            </TabItem>
+
+
+
+        </TabControl>
+        <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="19" Margin="74,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" AutomationProperties.IsRequiredForForm="True"/>
+        <Label Content="Name :" HorizontalAlignment="Left" Margin="0,6,0,0" VerticalAlignment="Top" Width="77" Height="26"/>
+        <Label Content="Details :" HorizontalAlignment="Left" Margin="0,37,0,0" VerticalAlignment="Top" Width="77" Height="26"/>
+        <TextBox x:Name="txtDetails" HorizontalAlignment="Left" Height="72" Margin="74,37,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" AcceptsReturn="True" AutomationProperties.IsRequiredForForm="True"/>
+        <Button x:Name="btnCreateEvent" Content="Create Event" HorizontalAlignment="Left" Margin="366,10,0,0" VerticalAlignment="Top" Width="84" Height="99" RenderTransformOrigin="-0.333,0.547" Click="btnCreateEvent_Click"/>
+
+
+    </Grid>
+</Window>
