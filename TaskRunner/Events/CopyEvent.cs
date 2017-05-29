@@ -34,6 +34,25 @@ namespace TaskRunner.Events
                     this.IsDirectCopy = XmlConvert.ToBoolean(value);
             }
         }
+
+        [XmlIgnore]
+        public Boolean IsReplaceExisting { get; set; }
+
+        [XmlElement("IsReplaceExisting")]
+        public string IsReplaceExistingSerialize
+        {
+            get { return this.IsReplaceExisting ? "True" : "False"; }
+            set
+            {
+                if (value.ToLower().Equals("true"))
+                    this.IsReplaceExisting = true;
+                else if (value.ToLower().Equals("false"))
+                    this.IsReplaceExisting = false;
+                else
+                    this.IsReplaceExisting = XmlConvert.ToBoolean(value);
+            }
+        }
+
         public string DestinationPath { get; set; }
 
 

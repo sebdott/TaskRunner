@@ -18,6 +18,9 @@
                 <MenuItem Header="_Save As" Click="SaveAs_Click"/>
                 <MenuItem Header="_Close" Click="Close_Click" />
             </MenuItem>
+            <MenuItem Header="_Edit">
+                <MenuItem Header="_New Event" Click="CreateEvent_Click" Name="MenuCreateEvent"/>
+            </MenuItem>
         </Menu>
         <DataGrid Name="dgEvents" AutoGenerateColumns="False" Margin="10,53,0,452" CanUserAddRows="false" CanUserDeleteRows="True" 
                   CommandManager.PreviewExecuted="DriversDataGrid_PreviewDeleteCommandHandler" HorizontalAlignment="Left" Width="600"
@@ -46,7 +49,6 @@
         <Label x:Name="lblStatus" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="256" Height="27" Background="{x:Null}"/>
         <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Margin="10,310,0,0" Width="600" IsReadOnly="True" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="339" VerticalAlignment="Top"/>
         <Label x:Name="lblOutput" Content="Output :" HorizontalAlignment="Left" Margin="10,279,0,0" VerticalAlignment="Top" Width="59"/>
-        <Button x:Name="btnCreateEvent" Content="Create New Event" HorizontalAlignment="Left" Margin="437,235,0,0" VerticalAlignment="Top" Width="105" Click="btnCreateEvent_Click"/>
 
     </Grid>
 </Window>

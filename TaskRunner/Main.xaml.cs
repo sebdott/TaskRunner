@@ -1,25 +1,10 @@
 ﻿using Microsoft.Win32;
 using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Globalization;
-using System.IO;
-using System.Linq;
 using System.Management.Automation;
-using System.Reflection;
-using System.Text;
-using System.Threading;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
-using System.Windows.Data;
-using System.Windows.Documents;
 using System.Windows.Input;
-using System.Windows.Media;
-using System.Windows.Media.Imaging;
-using System.Windows.Shapes;
-using System.Xml;
-using System.Xml.Serialization;
 using TaskRunner.Events;
 using TaskRunner.Handler;
 using TaskRunner.Helper;
@@ -85,7 +70,8 @@ namespace TaskRunner
                                 DestinationPath = eventInd.CopyEvent.DestinationPath,
                                 FolderPatterns = eventInd.CopyEvent.FolderPatterns,
                                 IsCompleted = IsCopyCompleted,
-                                IsFailed = IsBuildFailed
+                                IsFailed = IsBuildFailed,
+                                IsReplaceExisting = eventInd.CopyEvent.IsReplaceExisting,
                             });
 
                         };
@@ -109,11 +95,11 @@ namespace TaskRunner
             dgEvents.IsEnabled = true;
         }
 
-        private void btnCreateEvent_Click(object sender, RoutedEventArgs e)
+        private void CreateEvent_Click(object sender, RoutedEventArgs e)
         {
             CreateNewEvent createNewEvent = new CreateNewEvent(this);
             createNewEvent.Show();
-            btnCreateEvent.IsEnabled = false;
+            MenuCreateEvent.IsEnabled = false;
          //   this.Close();
         }
 

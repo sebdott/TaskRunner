@@ -40,6 +40,8 @@
                             </TransformGroup>
                         </TextBox.RenderTransform>
                     </TextBox>
+                    <Label Content="Is Replace Existing :" HorizontalAlignment="Left" Margin="126,10,0,0" VerticalAlignment="Top" Width="106"/>
+                    <CheckBox x:Name="chkIsReplaceExisting" Content="" HorizontalAlignment="Left" Margin="237,16,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.583,1.956" AutomationProperties.IsRequiredForForm="True"/>
 
                 </Grid>
             </TabItem>

@@ -59,7 +59,7 @@ namespace TaskRunner
 
         public void OnWindowClosing(object sender, CancelEventArgs e)
         {
-            _mainwindow.btnCreateEvent.IsEnabled = true;
+            _mainwindow.MenuCreateEvent.IsEnabled = true;
         }
 
         private void btnCopySourcePathBrowse_Click(object sender, RoutedEventArgs e)
@@ -97,7 +97,8 @@ namespace TaskRunner
                         };
 
                         eventInd.CopyEvent.IsDirectCopy = chkIsDirectCopy.IsChecked.HasValue? chkIsDirectCopy.IsChecked.Value: false;
-
+                        eventInd.CopyEvent.IsReplaceExisting = chkIsReplaceExisting.IsChecked.HasValue ? chkIsReplaceExisting.IsChecked.Value : false;
+                        
                         var filePatterns = txtCopyFilePattern.Text.Split(';');
 
                         eventInd.CopyEvent.FilePatterns = filePatterns.ToList();

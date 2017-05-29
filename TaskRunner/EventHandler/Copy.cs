@@ -54,22 +54,40 @@ namespace TaskRunner.Handler
                         folderPatternDirectories = Directory.GetDirectories(copyEventInput.SourcePath, folder, SearchOption.AllDirectories).ToList();
                     }
 
-                    foreach (var folderPatternDirectory in folderPatternDirectories)
+                    foreach (var sourceFolderPatternDirectory in folderPatternDirectories)
                     {
-                        var listofFilePath = new List<string>();
+                        var listofSourceFilePath = new List<string>();
 
                         foreach (var sourcePattern in copyEventInput.FilePatterns)
                         {
-                            listofFilePath.AddRange(Directory.GetFiles(folderPatternDirectory, "*" + sourcePattern, System.IO.SearchOption.AllDirectories).ToList());
+                            listofSourceFilePath.AddRange(Directory.GetFiles(sourceFolderPatternDirectory, "*" + sourcePattern, System.IO.SearchOption.AllDirectories).ToList());
                         }
 
-                        foreach (var filePath in listofFilePath)
+                        if (copyEventInput.IsReplaceExisting)
                         {
-                            var destinationPath = copyEventInput.DestinationPath + "\\" + Path.GetFileName(filePath);
+                            foreach (var filePath in listofSourceFilePath)
+                            {
+                                foreach (var ind in Directory.GetFiles(copyEventInput.DestinationPath, Path.GetFileName(filePath), System.IO.SearchOption.AllDirectories))
+                                {
+                                    File.Copy(filePath, ind, true);
+                                    OnCompleted(filePath, ind);
+                                }
+                            }
 
-                            File.Copy(filePath, destinationPath, true);
-                            OnCompleted(filePath, destinationPath);
+                                
                         }
+                        else
+                        {
+                            foreach (var filePath in listofSourceFilePath)
+                            {
+                                var destinationPath = copyEventInput.DestinationPath + "\\" + Path.GetFileName(filePath);
+
+                                File.Copy(filePath, destinationPath, true);
+                                OnCompleted(filePath, destinationPath);
+                            }
+
+                        }
+                       
                     }
                 }
             }
