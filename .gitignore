@@ -1,0 +1,7 @@
+﻿################################################################################
+# This .gitignore file was automatically created by Microsoft(R) Visual Studio.
+################################################################################
+
+/.vs/TaskRunner/v14
+/TaskRunner/bin/Debug
+/TaskRunner/obj/Debug

@@ -46,7 +46,12 @@
                 </Grid>
             </TabItem>
 
-
+            <TabItem x:Name="tbPowershell" Header="Powershell">
+                <Grid>
+                    <Label Content="Powershell Message : " HorizontalAlignment="Left" Margin="0,10,0,0" VerticalAlignment="Top" Width="121" Height="28"/>
+                    <TextBox x:Name="txtPowershellMessage" TextWrapping="Wrap" Margin="126,10,10,181.2" AutomationProperties.IsRequiredForForm="True"/>
+                </Grid>
+            </TabItem>
 
         </TabControl>
         <TextBox x:Name="txtName" HorizontalAlignment="Left" Height="19" Margin="74,10,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="287" AutomationProperties.IsRequiredForForm="True"/>

@@ -23,45 +23,7 @@ namespace TaskRunner
             _mainwindow = mainwindow;
         }
 
-        private void btnBuildSolutionPathBrowse_Click(object sender, RoutedEventArgs e)
-        {
-            txtBuildSolutionPath.Text = ReturnFileNameBrowse("Solution file|*.sln");
-        }
-
-        private string ReturnFileNameBrowse(string filter)
-        {
-            var openFileDialog = new OpenFileDialog();
-            openFileDialog.Filter = filter;
-            openFileDialog.Multiselect = false;
-
-            if (openFileDialog.ShowDialog() == true)
-            {
-                return openFileDialog.FileName;
-            }
-
-            return string.Empty;
-        }
-
-        private string ReturnFolderNameBrowse()
-        {
-            var openFolderDialog = new CommonOpenFileDialog();
-            openFolderDialog.IsFolderPicker = true;
-
-            var result = openFolderDialog.ShowDialog();
-
-            if (result == CommonFileDialogResult.Ok)
-            {
-                return openFolderDialog.FileName;
-            }
-
-            return string.Empty;
-        }
-
-        public void OnWindowClosing(object sender, CancelEventArgs e)
-        {
-            _mainwindow.MenuCreateEvent.IsEnabled = true;
-        }
-
+        #region Click Events
         private void btnCopySourcePathBrowse_Click(object sender, RoutedEventArgs e)
         {
             txtCopySourcePath.AppendText(ReturnFolderNameBrowse());
@@ -96,9 +58,9 @@ namespace TaskRunner
 
                         };
 
-                        eventInd.CopyEvent.IsDirectCopy = chkIsDirectCopy.IsChecked.HasValue? chkIsDirectCopy.IsChecked.Value: false;
+                        eventInd.CopyEvent.IsDirectCopy = chkIsDirectCopy.IsChecked.HasValue ? chkIsDirectCopy.IsChecked.Value : false;
                         eventInd.CopyEvent.IsReplaceExisting = chkIsReplaceExisting.IsChecked.HasValue ? chkIsReplaceExisting.IsChecked.Value : false;
-                        
+
                         var filePatterns = txtCopyFilePattern.Text.Split(';');
 
                         eventInd.CopyEvent.FilePatterns = filePatterns.ToList();
@@ -115,22 +77,26 @@ namespace TaskRunner
                             SolutionPath = txtBuildSolutionPath.Text
                         };
                         break;
-
+                    case "tbPowershell":
+                        eventInd.Type = EventTypeEnum.Powershell;
+                        eventInd.PowershellEvent = new PowershellEvent()
+                        {
+                            Message = txtPowershellMessage.Text
+                        };
+                        break;
                 }
 
-                if (AppResource.ListofEvents == null || AppResource.ListofEvents.ListofEvents.Count > 0)
+                if (AppResource.ListofEvents == null || AppResource.ListofEvents.ListofEvents.Count <= 0)
                 {
-                    var listofEvent =  new List<Event>();
+                    var listofEvent = new List<Event>();
                     listofEvent.Add(eventInd);
                     AppResource.ListofEvents = new EventList()
                     {
                         ListofEvents = listofEvent
                     };
-
-
                 }
-                else {
-
+                else
+                {
                     AppResource.ListofEvents.ListofEvents.Add(eventInd);
                 }
 
@@ -139,6 +105,47 @@ namespace TaskRunner
 
                 this.Close();
             }
+        }
+
+        private void btnBuildSolutionPathBrowse_Click(object sender, RoutedEventArgs e)
+        {
+            txtBuildSolutionPath.Text = ReturnFileNameBrowse("Solution file|*.sln");
+        } 
+        #endregion
+
+        #region Helper Method
+        private string ReturnFileNameBrowse(string filter)
+        {
+            var openFileDialog = new OpenFileDialog();
+            openFileDialog.Filter = filter;
+            openFileDialog.Multiselect = false;
+
+            if (openFileDialog.ShowDialog() == true)
+            {
+                return openFileDialog.FileName;
+            }
+
+            return string.Empty;
+        }
+
+        private string ReturnFolderNameBrowse()
+        {
+            var openFolderDialog = new CommonOpenFileDialog();
+            openFolderDialog.IsFolderPicker = true;
+
+            var result = openFolderDialog.ShowDialog();
+
+            if (result == CommonFileDialogResult.Ok)
+            {
+                return openFolderDialog.FileName;
+            }
+
+            return string.Empty;
+        }
+
+        public void OnWindowClosing(object sender, CancelEventArgs e)
+        {
+            _mainwindow.MenuCreateEvent.IsEnabled = true;
         }
 
         private bool IsValidated(string tabName)
@@ -160,10 +167,15 @@ namespace TaskRunner
                     result = !string.IsNullOrWhiteSpace(txtBuildSolutionPath.Text);
 
                     break;
+                case "tbPowershell":
+                    result = !string.IsNullOrWhiteSpace(txtPowershellMessage.Text);
+
+                    break;
             }
 
             return result;
-            
-        }
+
+        } 
+        #endregion
     }
 }

@@ -147,6 +147,8 @@
     <None Include="CakeScript\tools\xunit.runner.console\tools\xunit.console.exe.config" />
     <None Include="CakeScript\tools\xunit.runner.console\tools\xunit.console.x86.exe.config" />
     <None Include="CakeScript\tools\xunit.runner.console\xunit.runner.console.nupkg" />
+    <None Include="ConfigSamples\builder.config" />
+    <None Include="ConfigSamples\builder2.config" />
     <None Include="packages.config" />
     <None Include="Properties\Settings.settings">
       <Generator>SettingsSingleFileGenerator</Generator>
