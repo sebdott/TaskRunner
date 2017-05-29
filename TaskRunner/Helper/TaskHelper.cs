@@ -6,16 +6,22 @@ namespace TaskRunner.Helper
 {
     public class TaskHelper
     {
-        public static void Build(BuildEventInput buildEventInput)
+        public static void Build(BuildEventInput input)
         {
-            var eventDisPatcher = new EventDispatcher<BuildEventInput>(buildEventInput);
+            var eventDisPatcher = new EventDispatcher<BuildEventInput>(input);
             eventDisPatcher.Execute(new Build());
         }
 
-        public static void Copy(CopyEventInput copyEventInput)
+        public static void Copy(CopyEventInput input)
         {
-            var eventDisPatcher = new EventDispatcher<CopyEventInput>(copyEventInput);
+            var eventDisPatcher = new EventDispatcher<CopyEventInput>(input);
             eventDisPatcher.Execute(new Copy());
+        }
+
+        public static void Powershell(PowershellEventInput input)
+        {
+            var eventDisPatcher = new EventDispatcher<PowershellEventInput>(input);
+            eventDisPatcher.Execute(new PowershellCommand());
         }
     }
 }

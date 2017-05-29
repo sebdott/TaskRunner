@@ -99,8 +99,11 @@
     <Compile Include="EventHandler\Build.cs" />
     <Compile Include="EventHandler\EventDispatcher.cs" />
     <Compile Include="EventHandler\IEventHandler.cs" />
+    <Compile Include="EventHandler\PowershellCommand.cs" />
     <Compile Include="Events\AppResource.cs" />
+    <Compile Include="Events\PowershellEvent.cs" />
     <Compile Include="Events\BuildEvent.cs" />
+    <Compile Include="Events\PowershellEventInput.cs" />
     <Compile Include="Events\BuildEventInput.cs" />
     <Compile Include="Events\CopyEvent.cs" />
     <Compile Include="Events\CopyEventInput.cs" />

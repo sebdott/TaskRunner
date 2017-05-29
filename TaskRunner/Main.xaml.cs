@@ -78,6 +78,21 @@ namespace TaskRunner
 
                         };
                         break;
+
+                    case EventTypeEnum.Powershell:
+
+                        action = () =>
+                        {
+                            TaskHelper.Powershell(new PowershellEventInput()
+                            {
+                                Message = eventInd.PowershellEvent.Message,
+                                OutputCollection_DataAdded = OutputCollection_DataAdded,
+                                Error_DataAdded = Error_DataAdded
+
+                            });
+
+                        };
+                        break;
                 }
 
                 if (action != null)

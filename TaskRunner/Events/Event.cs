@@ -37,7 +37,8 @@ namespace TaskRunner.Events
 
         public CopyEvent CopyEvent { get; set; }
 
-
+        public PowershellEvent PowershellEvent { get; set; }
+        
         private StatusEnum _status;
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -72,6 +73,9 @@ namespace TaskRunner.Events
                         sb.AppendLine("File Copy Pattern: " + string.Join(",", CopyEvent.FilePatterns));
                         sb.AppendLine("Folder Copy Pattern: " + string.Join(",", CopyEvent.FolderPatterns));
                         sb.AppendLine("Destination Path: " + CopyEvent.DestinationPath.ToString());
+                        break;
+                    case EventTypeEnum.Powershell:
+                        sb.AppendLine("Message: " + PowershellEvent.Message);
                         break;
                 }
 
