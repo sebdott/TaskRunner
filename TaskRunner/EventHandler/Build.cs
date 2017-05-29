@@ -41,7 +41,7 @@ namespace TaskRunner.Handler
 
                 if (buildEventInput.IsIISReset)
                 {
-                    PowerShellInstance.AddScript("invoke - command - scriptblock { iisreset}");
+                    PowerShellInstance.AddScript("iisreset");
                 }
                 
                 PSDataCollection<PSObject> outputCollection = new PSDataCollection<PSObject>();

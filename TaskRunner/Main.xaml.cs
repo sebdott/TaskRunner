@@ -17,22 +17,21 @@ namespace TaskRunner
         public Main()
         {
             InitializeComponent();
-            
+
         }
-        
+
         #region Click Events
         private async void btnExecute_Click(object sender, RoutedEventArgs e)
         {
             dgEvents.IsEnabled = false;
+            btnExecute.IsEnabled = false;
 
             int index = 0;
 
             if (AppResource.ListofEvents == null)
             {
-                Dispatcher.Invoke((Action)(() =>
-                {
-                    UpdateLblStatus("Warning: There is no record in the event list !");
-                }));
+                UpdateLblStatus("Warning: There is no record in the event list !");
+
                 return;
             }
 
@@ -40,7 +39,7 @@ namespace TaskRunner
             {
                 Action action = null;
 
-                UpdateLblStatus("Task : "+ eventInd.Name+ " Processing...... ");
+                UpdateLblStatus("Task : " + eventInd.Name + " Processing...... ");
 
                 switch (eventInd.Type)
                 {
@@ -66,7 +65,7 @@ namespace TaskRunner
                         {
                             TaskHelper.Copy(new CopyEventInput()
                             {
-                                IsDirectCopy =eventInd.CopyEvent.IsDirectCopy,
+                                IsDirectCopy = eventInd.CopyEvent.IsDirectCopy,
                                 SourcePath = eventInd.CopyEvent.SourcePath,
                                 FilePatterns = eventInd.CopyEvent.FilePatterns,
                                 DestinationPath = eventInd.CopyEvent.DestinationPath,
@@ -110,7 +109,8 @@ namespace TaskRunner
             }
 
             dgEvents.IsEnabled = true;
-            
+            btnExecute.IsEnabled = true;
+
             UpdateLblStatus("Notice: Process Completed !");
 
         }
@@ -120,7 +120,6 @@ namespace TaskRunner
             CreateNewEvent createNewEvent = new CreateNewEvent(this);
             createNewEvent.Show();
             MenuCreateEvent.IsEnabled = false;
-         //   this.Close();
         }
 
         private void Open_Click(object sender, RoutedEventArgs e)
@@ -183,7 +182,7 @@ namespace TaskRunner
         #endregion
 
         #region Handlers
-        
+
         private void DriversDataGrid_PreviewDeleteCommandHandler(object sender, ExecutedRoutedEventArgs e)
         {
             if (e.Command == DataGrid.DeleteCommand)
@@ -268,6 +267,7 @@ namespace TaskRunner
 
         #endregion
 
+        #region Helper Method
         private void UpdateLblStatus(string message)
         {
             Dispatcher.Invoke((Action)(() =>
@@ -275,6 +275,7 @@ namespace TaskRunner
                 lblStatus.Content = message;
             }));
         }
+        #endregion
     }
 }
 
