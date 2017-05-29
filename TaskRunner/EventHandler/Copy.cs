@@ -5,12 +5,13 @@ using TaskRunner.Events;
 using TaskRunner.Properties;
 using TaskRunner.Misc;
 using System.Collections.Generic;
+using System.Threading.Tasks;
+using TaskRunner.EventHandler;
 
 namespace TaskRunner.Handler
 {
     public class Copy : IEventHandler<CopyEventInput>
     {
-
         private readonly int timeout;
         private readonly string powershellScriptPath;
         private readonly string cakeScriptPath;
@@ -65,16 +66,24 @@ namespace TaskRunner.Handler
 
                         if (copyEventInput.IsReplaceExisting)
                         {
+                            var taskList = new List<Task>();
+
                             foreach (var filePath in listofSourceFilePath)
                             {
-                                foreach (var ind in Directory.GetFiles(copyEventInput.DestinationPath, Path.GetFileName(filePath), System.IO.SearchOption.AllDirectories))
+                                var copyFileAction = Task.Run(() =>
                                 {
-                                    File.Copy(filePath, ind, true);
-                                    OnCompleted(filePath, ind);
-                                }
+                                    foreach (var ind in Directory.GetFiles(copyEventInput.DestinationPath, Path.GetFileName(filePath), System.IO.SearchOption.AllDirectories))
+                                    {
+                                        File.Copy(filePath, ind, true);
+                                        OnCompleted(filePath, ind);
+                                    }
+
+                                });
+
+                                taskList.Add(copyFileAction);
                             }
 
-                                
+                            Task.WaitAll(taskList.ToArray());
                         }
                         else
                         {
@@ -85,9 +94,7 @@ namespace TaskRunner.Handler
                                 File.Copy(filePath, destinationPath, true);
                                 OnCompleted(filePath, destinationPath);
                             }
-
                         }
-                       
                     }
                 }
             }

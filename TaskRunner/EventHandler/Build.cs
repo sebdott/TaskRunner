@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Management.Automation;
 using System.Threading;
+using TaskRunner.EventHandler;
 using TaskRunner.Events;
 using TaskRunner.Properties;
 
@@ -8,7 +9,6 @@ namespace TaskRunner.Handler
 {
     public class Build : IEventHandler<BuildEventInput>
     {
-
         private readonly int timeout;
         private readonly string powershellScriptPath;
         private readonly string cakeScriptPath;
@@ -29,7 +29,6 @@ namespace TaskRunner.Handler
 
         public void Execute(BuildEventInput buildEventInput)
         {
-
             IsCompleted += buildEventInput.IsCompleted;
             IsFailed += buildEventInput.IsFailed;
 

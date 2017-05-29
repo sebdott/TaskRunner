@@ -31,7 +31,7 @@ namespace TaskRunner
             {
                 Dispatcher.Invoke((Action)(() =>
                 {
-                    lblStatus.Content = "Warning: There is no record in the event list !";
+                    UpdateLblStatus("Warning: There is no record in the event list !");
                 }));
                 return;
             }
@@ -39,6 +39,8 @@ namespace TaskRunner
             foreach (var eventInd in AppResource.ListofEvents.ListofEvents)
             {
                 Action action = null;
+
+                UpdateLblStatus("Task : "+ eventInd.Name+ " Processing...... ");
 
                 switch (eventInd.Type)
                 {
@@ -93,6 +95,9 @@ namespace TaskRunner
             }
 
             dgEvents.IsEnabled = true;
+            
+            UpdateLblStatus("Notice: Process Completed !");
+
         }
 
         private void CreateEvent_Click(object sender, RoutedEventArgs e)
@@ -247,6 +252,14 @@ namespace TaskRunner
         }
 
         #endregion
+
+        private void UpdateLblStatus(string message)
+        {
+            Dispatcher.Invoke((Action)(() =>
+            {
+                lblStatus.Content = message;
+            }));
+        }
     }
 }
 

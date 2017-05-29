@@ -97,6 +97,7 @@
     </Compile>
     <Compile Include="EventHandler\Copy.cs" />
     <Compile Include="EventHandler\Build.cs" />
+    <Compile Include="EventHandler\EventDispatcher.cs" />
     <Compile Include="EventHandler\IEventHandler.cs" />
     <Compile Include="Events\AppResource.cs" />
     <Compile Include="Events\BuildEvent.cs" />
