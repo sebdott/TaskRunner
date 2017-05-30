@@ -136,14 +136,20 @@
       <LastGenOutput>Resources.Designer.cs</LastGenOutput>
     </EmbeddedResource>
     <None Include="CakeScript\build.cake">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
     <None Include="CakeScript\build.ps1">
-      <CopyToOutputDirectory>Always</CopyToOutputDirectory>
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
     </None>
-    <None Include="CakeScript\tools\Cake\Cake.nupkg" />
-    <None Include="CakeScript\tools\packages.config" />
-    <None Include="CakeScript\tools\packages.config.md5sum" />
+    <None Include="CakeScript\tools\Cake\Cake.nupkg">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="CakeScript\tools\packages.config">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
+    <None Include="CakeScript\tools\packages.config.md5sum">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </None>
     <None Include="CakeScript\tools\xunit.runner.console\tools\xunit.console.exe.config" />
     <None Include="CakeScript\tools\xunit.runner.console\tools\xunit.console.x86.exe.config" />
     <None Include="CakeScript\tools\xunit.runner.console\xunit.runner.console.nupkg" />
@@ -171,19 +177,45 @@
     </BootstrapperPackage>
   </ItemGroup>
   <ItemGroup>
-    <Content Include="CakeScript\tools\Cake\Autofac.dll" />
-    <Content Include="CakeScript\tools\Cake\Cake.Common.dll" />
-    <Resource Include="CakeScript\tools\Cake\Cake.Common.xml" />
-    <Content Include="CakeScript\tools\Cake\Cake.Core.dll" />
-    <Resource Include="CakeScript\tools\Cake\Cake.Core.xml" />
-    <Content Include="CakeScript\tools\Cake\Cake.exe" />
-    <Content Include="CakeScript\tools\Cake\Cake.NuGet.dll" />
-    <Resource Include="CakeScript\tools\Cake\Cake.NuGet.xml" />
-    <Content Include="CakeScript\tools\Cake\Mono.CSharp.dll" />
-    <Content Include="CakeScript\tools\Cake\NuGet.Core.dll" />
-    <Content Include="CakeScript\tools\Cake\Roslyn.Compilers.CSharp.dll" />
-    <Content Include="CakeScript\tools\Cake\Roslyn.Compilers.dll" />
-    <Content Include="CakeScript\tools\nuget.exe" />
+    <Content Include="CakeScript\tools\Cake\Autofac.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CakeScript\tools\Cake\Cake.Common.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="CakeScript\tools\Cake\Cake.Common.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="CakeScript\tools\Cake\Cake.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="CakeScript\tools\Cake\Cake.Core.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="CakeScript\tools\Cake\Cake.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CakeScript\tools\Cake\Cake.NuGet.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Resource Include="CakeScript\tools\Cake\Cake.NuGet.xml">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Resource>
+    <Content Include="CakeScript\tools\Cake\Mono.CSharp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CakeScript\tools\Cake\NuGet.Core.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CakeScript\tools\Cake\Roslyn.Compilers.CSharp.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CakeScript\tools\Cake\Roslyn.Compilers.dll">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
+    <Content Include="CakeScript\tools\nuget.exe">
+      <CopyToOutputDirectory>PreserveNewest</CopyToOutputDirectory>
+    </Content>
     <Resource Include="CakeScript\tools\xunit.runner.console\tools\HTML.xslt" />
     <Resource Include="CakeScript\tools\xunit.runner.console\tools\NUnitXml.xslt" />
     <Content Include="CakeScript\tools\xunit.runner.console\tools\xunit.abstractions.dll" />
