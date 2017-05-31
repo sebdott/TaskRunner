@@ -10,7 +10,7 @@ using TaskRunner.EventHandler;
 
 namespace TaskRunner.Handler
 {
-    public class Copy : IEventHandler<CopyEventInput>
+    public class CopyHandler : IEventHandler<Copy>
     {
         private readonly int timeout;
         private readonly string powershellScriptPath;
@@ -21,7 +21,7 @@ namespace TaskRunner.Handler
         public event EventHandler<CopyEventArgs> IsCompleted;
         public event EventHandler<EventArgs> IsFailed;
 
-        public Copy()
+        public CopyHandler()
         {
             timeout = Settings.Default.ExecutionTimeOutInSeconds;
             powershellScriptPath = Settings.Default.PowershellScriptPath;
@@ -29,7 +29,7 @@ namespace TaskRunner.Handler
             timeoutTS = new TimeSpan(0, 0, 0, timeout);
         }
 
-        public void Execute(CopyEventInput copyEventInput)
+        public void Execute(Copy copyEventInput)
         {
             IsCompleted += copyEventInput.IsCompleted;
             IsFailed += copyEventInput.IsFailed;
@@ -63,7 +63,7 @@ namespace TaskRunner.Handler
                         {
                             listofSourceFilePath.AddRange(Directory.GetFiles(sourceFolderPatternDirectory, "*" + sourcePattern, System.IO.SearchOption.AllDirectories).ToList());
                         }
-
+                        
                         if (copyEventInput.IsReplaceExisting)
                         {
                             var taskList = new List<Task>();

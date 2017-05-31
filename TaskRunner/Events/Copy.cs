@@ -1,12 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
+using TaskRunner.Handler;
 
 namespace TaskRunner.Events
 {
-    [XmlInclude(typeof(Event))]
-    public class CopyEvent : Event
+    public class Copy : Event
     {
         public string SourcePath { get; set; }
 
@@ -54,7 +55,26 @@ namespace TaskRunner.Events
         }
 
         public string DestinationPath { get; set; }
+        [XmlIgnore]
+        public EventHandler<CopyEventArgs> IsCompleted { get; set; }
+        [XmlIgnore]
+        public EventHandler<EventArgs> IsFailed { get; set; }
 
+        [XmlIgnore]
+        public override string DetailsDescription
+        {
+            get
+            {
+                var sb = new StringBuilder();
 
+                sb.AppendLine("Is Direct Copy: " + (IsDirectCopy ? "Yes" : "No"));
+                sb.AppendLine("Source Path: " + SourcePath.ToString());
+                sb.AppendLine("File Copy Pattern: " + string.Join(",", FilePatterns));
+                sb.AppendLine("Folder Copy Pattern: " + string.Join(",", FolderPatterns));
+                sb.AppendLine("Destination Path: " + DestinationPath.ToString());
+
+                return sb.ToString();
+            }
+        }
     }
 }

@@ -1,14 +1,15 @@
-﻿using System.Windows;
+﻿using System.Collections.Generic;
+using System.Windows;
 
 namespace TaskRunner.Events
 {
     public static class AppResource
     {
-        public static EventList ListofEvents
+        public static EventTask ListofEvents
         {
             get
             {
-                return Application.Current.Resources["Events"] as EventList;
+                return Application.Current.Resources["Events"] as EventTask;
                 
             }
             set

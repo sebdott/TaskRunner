@@ -1,9 +1,10 @@
 ﻿using System;
+using TaskRunner.Events;
 using TaskRunner.Handler;
 
 namespace TaskRunner.EventHandler
 {
-    public class EventDispatcher<TEventInput>
+    public class EventDispatcher<TEventInput> where TEventInput : Event
     {
         public TEventInput _eventInput;
 

@@ -1,8 +1,9 @@
 ﻿using System;
+using TaskRunner.Events;
 
-namespace TaskRunner.EventHandler
+namespace TaskRunner.Handler
 {
-    public interface IEventHandler<TEventInput>
+    public interface IEventHandler<TEventInput> where TEventInput : Event
     {
         void Execute(TEventInput evenInput);
     }

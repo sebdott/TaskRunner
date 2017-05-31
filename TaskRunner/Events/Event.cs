@@ -8,15 +8,26 @@ using System.Text;
 
 namespace TaskRunner.Events
 {
-    [Serializable]
+    //[Serializable]
+    //[XmlRoot("EventTask")]
+    //public class EventTask
+    //{
+    //    [XmlArray(ElementName = "Events")]
+    //    [XmlArrayItem(ElementName = "Event")]
+    //    public List<Event> ListofEvents { get; set; }
+
+    //}
+
     [XmlRoot("Events")]
-    public class EventList
+    public class EventTask : List<Event>
     {
-        [XmlElement("Event")]
-        public List<Event> ListofEvents { get; set; }
 
     }
-    public class Event : INotifyPropertyChanged
+    
+    [XmlInclude(typeof(Build))]
+    [XmlInclude(typeof(Copy))]
+    [XmlInclude(typeof(PowershellRun))]
+    public abstract class Event : INotifyPropertyChanged
     {
         public Event()
         {
@@ -32,12 +43,6 @@ namespace TaskRunner.Events
         public string Details { get; set; }
 
         public int Order { get; set; }
-
-        public BuildEvent BuildEvent { get; set; }
-
-        public CopyEvent CopyEvent { get; set; }
-
-        public PowershellEvent PowershellEvent { get; set; }
         
         private StatusEnum _status;
         public event PropertyChangedEventHandler PropertyChanged;
@@ -56,34 +61,13 @@ namespace TaskRunner.Events
         }
         
         [XmlIgnore]
-        public string DetailsDescription
+        public virtual string DetailsDescription
         {
             get
             {
                 var sb = new StringBuilder();
 
-                switch (Type)
-                {
-                    case EventTypeEnum.Build:
-                        sb.AppendLine("Solution Path: " + BuildEvent.SolutionPath);
-                        break;
-                    case EventTypeEnum.Copy:
-                        sb.AppendLine("Is Direct Copy: " + (CopyEvent.IsDirectCopy ? "Yes" : "No"));
-                        sb.AppendLine("Source Path: " + CopyEvent.SourcePath.ToString());
-                        sb.AppendLine("File Copy Pattern: " + string.Join(",", CopyEvent.FilePatterns));
-                        sb.AppendLine("Folder Copy Pattern: " + string.Join(",", CopyEvent.FolderPatterns));
-                        sb.AppendLine("Destination Path: " + CopyEvent.DestinationPath.ToString());
-                        break;
-                    case EventTypeEnum.Powershell:
-                        sb.AppendLine("Message: " + PowershellEvent.Message);
-                        break;
-                }
-
                 return sb.ToString();
-            }
-            set
-            {
-                DetailsDescription = value;
             }
         }
     }

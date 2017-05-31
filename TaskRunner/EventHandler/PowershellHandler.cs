@@ -1,13 +1,13 @@
 ﻿using System;
-using System.Management.Automation;
-using System.Threading;
-using TaskRunner.EventHandler;
 using TaskRunner.Events;
 using TaskRunner.Properties;
+using TaskRunner.EventHandler;
+using System.Management.Automation;
+using System.Threading;
 
 namespace TaskRunner.Handler
 {
-    public class Build : IEventHandler<BuildEventInput>
+    public class PowershellHandler : IEventHandler<PowershellRun>
     {
         private readonly int timeout;
         private readonly string powershellScriptPath;
@@ -16,10 +16,9 @@ namespace TaskRunner.Handler
         private const char ExtensionDelimer = ';';
 
         public event EventHandler<EventArgs> IsCompleted;
-
         public event EventHandler<EventArgs> IsFailed;
 
-        public Build()
+        public PowershellHandler()
         {
             timeout = Settings.Default.ExecutionTimeOutInSeconds;
             powershellScriptPath = Settings.Default.PowershellScriptPath;
@@ -27,27 +26,19 @@ namespace TaskRunner.Handler
             timeoutTS = new TimeSpan(0, 0, 0, timeout);
         }
 
-        public void Execute(BuildEventInput buildEventInput)
+        public void Execute(PowershellRun runPowershellInput)
         {
-            IsCompleted += buildEventInput.IsCompleted;
-            IsFailed += buildEventInput.IsFailed;
+            IsCompleted += runPowershellInput.IsCompleted;
+            IsFailed += runPowershellInput.IsFailed;
 
             using (PowerShell PowerShellInstance = PowerShell.Create())
             {
+                PowerShellInstance.AddScript(runPowershellInput.Message);
 
-                PowerShellInstance.AddScript("Set-ExecutionPolicy -Scope Process -ExecutionPolicy Bypass");
-                PowerShellInstance.AddScript(@"" + powershellScriptPath + @" -Script " + cakeScriptPath
-                + " -solutionPath=\"" + buildEventInput.SolutionPath + "\"");
-
-                if (buildEventInput.IsIISReset)
-                {
-                    PowerShellInstance.AddScript("iisreset");
-                }
-                
                 PSDataCollection<PSObject> outputCollection = new PSDataCollection<PSObject>();
-                outputCollection.DataAdded += buildEventInput.OutputCollection_DataAdded;
+                outputCollection.DataAdded += runPowershellInput.OutputCollection_DataAdded;
 
-                PowerShellInstance.Streams.Error.DataAdded += buildEventInput.Error_DataAdded;
+                PowerShellInstance.Streams.Error.DataAdded += runPowershellInput.Error_DataAdded;
 
                 DateTime startTime = DateTime.Now;
 

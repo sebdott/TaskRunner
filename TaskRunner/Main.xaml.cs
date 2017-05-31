@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
+using TaskRunner.EventHandler;
 using TaskRunner.Events;
 using TaskRunner.Handler;
 using TaskRunner.Helper;
@@ -35,64 +36,80 @@ namespace TaskRunner
                 return;
             }
 
-            foreach (var eventInd in AppResource.ListofEvents.ListofEvents)
+            foreach (var eventInd in AppResource.ListofEvents)
             {
                 Action action = null;
 
                 UpdateLblStatus("Task : " + eventInd.Name + " Processing...... ");
 
-                switch (eventInd.Type)
-                {
-                    case EventTypeEnum.Build:
-
-                        action = () =>
+                action = () =>
                         {
-                            TaskHelper.Build(new BuildEventInput()
-                            {
-                                SolutionPath = eventInd.BuildEvent.SolutionPath,
-                                OutputCollection_DataAdded = OutputCollection_DataAdded,
-                                Error_DataAdded = Error_DataAdded,
-                                IsCompleted = IsBuildCompleted,
-                                IsFailed = IsBuildFailed
 
-                            });
+                            TaskHelper.Execute(eventInd);
+
+                            //TaskHelper.Build(new BuildEventInput()
+                            //{
+                            //    SolutionPath = eventInd.BuildEvent.SolutionPath,
+                            //    OutputCollection_DataAdded = OutputCollection_DataAdded,
+                            //    Error_DataAdded = Error_DataAdded,
+                            //    IsCompleted = IsBuildCompleted,
+                            //    IsFailed = IsBuildFailed
+
+                            //});
                         };
-                        break;
 
-                    case EventTypeEnum.Copy:
+                //switch (eventInd.Type)
+                //{
+                //    case EventTypeEnum.Build:
 
-                        action = () =>
-                        {
-                            TaskHelper.Copy(new CopyEventInput()
-                            {
-                                IsDirectCopy = eventInd.CopyEvent.IsDirectCopy,
-                                SourcePath = eventInd.CopyEvent.SourcePath,
-                                FilePatterns = eventInd.CopyEvent.FilePatterns,
-                                DestinationPath = eventInd.CopyEvent.DestinationPath,
-                                FolderPatterns = eventInd.CopyEvent.FolderPatterns,
-                                IsCompleted = IsCopyCompleted,
-                                IsFailed = IsBuildFailed,
-                                IsReplaceExisting = eventInd.CopyEvent.IsReplaceExisting,
-                            });
+                //        action = () =>
+                //        {
+                //            TaskHelper.Build(new BuildEventInput()
+                //            {
+                //                SolutionPath = eventInd.BuildEvent.SolutionPath,
+                //                OutputCollection_DataAdded = OutputCollection_DataAdded,
+                //                Error_DataAdded = Error_DataAdded,
+                //                IsCompleted = IsBuildCompleted,
+                //                IsFailed = IsBuildFailed
 
-                        };
-                        break;
+                //            });
+                //        };
+                //        break;
 
-                    case EventTypeEnum.Powershell:
+                //    case EventTypeEnum.Copy:
 
-                        action = () =>
-                        {
-                            TaskHelper.Powershell(new PowershellEventInput()
-                            {
-                                Message = eventInd.PowershellEvent.Message,
-                                OutputCollection_DataAdded = OutputCollection_DataAdded,
-                                Error_DataAdded = Error_DataAdded
+                //        action = () =>
+                //        {
+                //            TaskHelper.Copy(new CopyEventInput()
+                //            {
+                //                IsDirectCopy = eventInd.CopyEvent.IsDirectCopy,
+                //                SourcePath = eventInd.CopyEvent.SourcePath,
+                //                FilePatterns = eventInd.CopyEvent.FilePatterns,
+                //                DestinationPath = eventInd.CopyEvent.DestinationPath,
+                //                FolderPatterns = eventInd.CopyEvent.FolderPatterns,
+                //                IsCompleted = IsCopyCompleted,
+                //                IsFailed = IsBuildFailed,
+                //                IsReplaceExisting = eventInd.CopyEvent.IsReplaceExisting,
+                //            });
 
-                            });
+                //        };
+                //        break;
 
-                        };
-                        break;
-                }
+                //    case EventTypeEnum.Powershell:
+
+                //        action = () =>
+                //        {
+                //            TaskHelper.Powershell(new PowershellEventInput()
+                //            {
+                //                Message = eventInd.PowershellEvent.Message,
+                //                OutputCollection_DataAdded = OutputCollection_DataAdded,
+                //                Error_DataAdded = Error_DataAdded
+
+                //            });
+
+                //        };
+                //        break;
+                //}
 
                 if (action != null)
                 {
@@ -117,8 +134,8 @@ namespace TaskRunner
 
         private void CreateEvent_Click(object sender, RoutedEventArgs e)
         {
-            CreateNewEvent createNewEvent = new CreateNewEvent(this);
-            createNewEvent.Show();
+            //CreateNewEvent createNewEvent = new CreateNewEvent(this);
+            //createNewEvent.Show();
             MenuCreateEvent.IsEnabled = false;
         }
 
@@ -130,12 +147,12 @@ namespace TaskRunner
 
             if (openFileDialog.ShowDialog() == true)
             {
-                var listofEvent = Util.LoadXML<EventList>(openFileDialog);
+                var eventTask = Util.LoadXML<EventTask>(openFileDialog);
 
-                AppResource.ListofEvents = listofEvent;
+                AppResource.ListofEvents = eventTask;
                 AppResource.CurrentFile = openFileDialog.FileName;
 
-                dgEvents.ItemsSource = AppResource.ListofEvents.ListofEvents;
+                dgEvents.ItemsSource = AppResource.ListofEvents;
             }
         }
 

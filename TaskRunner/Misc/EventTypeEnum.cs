@@ -10,7 +10,7 @@ namespace TaskRunner.Misc
         Copy,
         [Description("Build")]
         Build,
-        [Description("Powershell")]
-        Powershell
+        [Description("PowershellRun")]
+        PowershellRun
     }
 }
