@@ -13,11 +13,11 @@ namespace TaskRunner.EventHandler
             _eventInput = EventInput;
         }
 
-        public void Execute(IEventHandler<TEventInput> EventHandler)
+        public void Execute(IEventHandler EventHandler)
         {
             if (EventHandler != null)
             {
-                EventHandler.Execute(_eventInput);
+                EventHandler.Execute();
             }
             else
             {

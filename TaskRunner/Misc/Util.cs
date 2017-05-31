@@ -1,6 +1,7 @@
 ﻿using Microsoft.Practices.Unity;
 using Microsoft.Practices.Unity.Configuration;
 using Microsoft.Win32;
+using System;
 using System.Collections.Generic;
 using System.Configuration;
 using System.IO;
@@ -51,21 +52,10 @@ namespace TaskRunner.Misc
             return false;
         }
 
-        public static Handler ResolveHandler<Input ,Handler>(string type)
-            where Input : Event
-            where Handler : IEventHandler<Event>
+
+        public static string GetEnumValue<T>(T type)
         {
-            IUnityContainer container = new UnityContainer();
-            var config = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
-            container.LoadConfiguration(config);
-
-            //var t = container.Resolve<PowershellHandler>("PowershellRun");
-            var ts = container.Resolve<IEventHandler<Event>>("PowershellRun");
-
-            //var resolveall = container.ResolveAll<IEventHandler<Event>>();
-
-
-            return container.Resolve<Handler>(type);
+           return Enum.GetName(typeof(T), type);
         }
     }
 }

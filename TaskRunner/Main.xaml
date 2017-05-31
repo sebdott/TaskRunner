@@ -46,7 +46,7 @@
             </DataGrid.RowDetailsTemplate>
         </DataGrid>
         <Button x:Name="btnExecute" Content="Execute" HorizontalAlignment="Left" Margin="547,235,0,0" VerticalAlignment="Top" Width="63" Click="btnExecute_Click" Height="50" RenderTransformOrigin="0.621,0.928"/>
-        <Label x:Name="lblStatus" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="256" Height="27" Background="{x:Null}"/>
+        <Label x:Name="lblStatus" HorizontalAlignment="Left" Margin="10,235,0,0" VerticalAlignment="Top" Width="456" Height="27" Background="{x:Null}"/>
         <TextBox x:Name="txtOutput" HorizontalAlignment="Left" Margin="10,310,0,0" Width="600" IsReadOnly="True" AcceptsReturn="True" HorizontalScrollBarVisibility="Auto" VerticalScrollBarVisibility="Auto" Height="339" VerticalAlignment="Top"/>
         <Label x:Name="lblOutput" Content="Output :" HorizontalAlignment="Left" Margin="10,279,0,0" VerticalAlignment="Top" Width="59"/>
 

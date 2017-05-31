@@ -10,7 +10,7 @@ using TaskRunner.EventHandler;
 
 namespace TaskRunner.Handler
 {
-    public class CopyHandler : IEventHandler<Copy>
+    public class CopyHandler : IEventHandler
     {
         private readonly int timeout;
         private readonly string powershellScriptPath;
@@ -20,16 +20,18 @@ namespace TaskRunner.Handler
 
         public event EventHandler<CopyEventArgs> IsCompleted;
         public event EventHandler<EventArgs> IsFailed;
+        public Copy copyEventInput;
 
-        public CopyHandler()
+        public CopyHandler(Copy Copy)
         {
             timeout = Settings.Default.ExecutionTimeOutInSeconds;
             powershellScriptPath = Settings.Default.PowershellScriptPath;
             cakeScriptPath = Settings.Default.CakeScriptPath;
             timeoutTS = new TimeSpan(0, 0, 0, timeout);
+            copyEventInput = Copy;
         }
 
-        public void Execute(Copy copyEventInput)
+        public void Execute()
         {
             IsCompleted += copyEventInput.IsCompleted;
             IsFailed += copyEventInput.IsFailed;
@@ -63,27 +65,38 @@ namespace TaskRunner.Handler
                         {
                             listofSourceFilePath.AddRange(Directory.GetFiles(sourceFolderPatternDirectory, "*" + sourcePattern, System.IO.SearchOption.AllDirectories).ToList());
                         }
-                        
+
                         if (copyEventInput.IsReplaceExisting)
                         {
                             var taskList = new List<Task>();
 
                             foreach (var filePath in listofSourceFilePath)
                             {
-                                var copyFileAction = Task.Run(() =>
-                                {
+                                //var copyFileAction = Task.Run(() =>
+                                //{
                                     foreach (var ind in Directory.GetFiles(copyEventInput.DestinationPath, Path.GetFileName(filePath), System.IO.SearchOption.AllDirectories))
                                     {
-                                        File.Copy(filePath, ind, true);
-                                        OnCompleted(filePath, ind);
+                                        try
+                                        {
+
+                                            File.Copy(filePath, ind, true);
+                                            OnCompleted(filePath, ind);
+
+                                        }
+                                        catch (System.IO.IOException ex)
+                                        {
+                                            OnCompleted("Error", filePath);
+                                        }
+
                                     }
 
-                                });
+                                //});
 
-                                taskList.Add(copyFileAction);
+                                //taskList.Add(copyFileAction);
                             }
 
-                            Task.WaitAll(taskList.ToArray());
+                            //Task.WaitAll(taskList.ToArray());
+
                         }
                         else
                         {

@@ -1,11 +1,11 @@
 ﻿using Microsoft.Win32;
 using System;
+using System.Diagnostics;
 using System.Management.Automation;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Controls;
 using System.Windows.Input;
-using TaskRunner.EventHandler;
 using TaskRunner.Events;
 using TaskRunner.Handler;
 using TaskRunner.Helper;
@@ -36,6 +36,8 @@ namespace TaskRunner
                 return;
             }
 
+            Stopwatch sw = new Stopwatch();
+            sw.Start();
             foreach (var eventInd in AppResource.ListofEvents)
             {
                 Action action = null;
@@ -44,72 +46,24 @@ namespace TaskRunner
 
                 action = () =>
                         {
+                            eventInd.OutputCollection_DataAdded = OutputCollection_DataAdded;
+                            eventInd.Error_DataAdded = Error_DataAdded;
+                            eventInd.IsCompleted = IsBuildCompleted;
+                            eventInd.IsFailed = IsBuildFailed;
 
-                            TaskHelper.Execute(eventInd);
+                            if (eventInd.Type == EventTypeEnum.Copy)
+                            {
+                                var copyEvent = ((Copy)eventInd);
 
-                            //TaskHelper.Build(new BuildEventInput()
-                            //{
-                            //    SolutionPath = eventInd.BuildEvent.SolutionPath,
-                            //    OutputCollection_DataAdded = OutputCollection_DataAdded,
-                            //    Error_DataAdded = Error_DataAdded,
-                            //    IsCompleted = IsBuildCompleted,
-                            //    IsFailed = IsBuildFailed
+                                copyEvent.IsCompleted = IsCopyCompleted;
+                                TaskHelper.Execute(eventInd);
+                            }
+                            else {
 
-                            //});
+                                TaskHelper.Execute(eventInd);
+                            }
                         };
-
-                //switch (eventInd.Type)
-                //{
-                //    case EventTypeEnum.Build:
-
-                //        action = () =>
-                //        {
-                //            TaskHelper.Build(new BuildEventInput()
-                //            {
-                //                SolutionPath = eventInd.BuildEvent.SolutionPath,
-                //                OutputCollection_DataAdded = OutputCollection_DataAdded,
-                //                Error_DataAdded = Error_DataAdded,
-                //                IsCompleted = IsBuildCompleted,
-                //                IsFailed = IsBuildFailed
-
-                //            });
-                //        };
-                //        break;
-
-                //    case EventTypeEnum.Copy:
-
-                //        action = () =>
-                //        {
-                //            TaskHelper.Copy(new CopyEventInput()
-                //            {
-                //                IsDirectCopy = eventInd.CopyEvent.IsDirectCopy,
-                //                SourcePath = eventInd.CopyEvent.SourcePath,
-                //                FilePatterns = eventInd.CopyEvent.FilePatterns,
-                //                DestinationPath = eventInd.CopyEvent.DestinationPath,
-                //                FolderPatterns = eventInd.CopyEvent.FolderPatterns,
-                //                IsCompleted = IsCopyCompleted,
-                //                IsFailed = IsBuildFailed,
-                //                IsReplaceExisting = eventInd.CopyEvent.IsReplaceExisting,
-                //            });
-
-                //        };
-                //        break;
-
-                //    case EventTypeEnum.Powershell:
-
-                //        action = () =>
-                //        {
-                //            TaskHelper.Powershell(new PowershellEventInput()
-                //            {
-                //                Message = eventInd.PowershellEvent.Message,
-                //                OutputCollection_DataAdded = OutputCollection_DataAdded,
-                //                Error_DataAdded = Error_DataAdded
-
-                //            });
-
-                //        };
-                //        break;
-                //}
+                
 
                 if (action != null)
                 {
@@ -127,9 +81,11 @@ namespace TaskRunner
 
             dgEvents.IsEnabled = true;
             btnExecute.IsEnabled = true;
+            sw.Stop();
+            UpdateLblStatus("Notice: Process Completed ! Total Run Time :" + sw.Elapsed);
 
-            UpdateLblStatus("Notice: Process Completed !");
-
+           
+            
         }
 
         private void CreateEvent_Click(object sender, RoutedEventArgs e)
@@ -206,7 +162,6 @@ namespace TaskRunner
             {
                 if (!(MessageBox.Show("Are you sure you want to delete?", "Please confirm.", MessageBoxButton.YesNo) == MessageBoxResult.Yes))
                 {
-                    // Cancel Delete.
                     e.Handled = true;
                 }
             }
@@ -219,8 +174,9 @@ namespace TaskRunner
                 txtOutput.AppendText(Environment.NewLine);
                 txtOutput.AppendText("Success Copied From :" + e.SourceFilePath);
                 txtOutput.AppendText(Environment.NewLine);
-                txtOutput.AppendText("Success Copied To :" + e.DestinationFilePath);
+                txtOutput.AppendText(txtOutput.Text.Length +"Success Copied To :" + e.DestinationFilePath);
                 txtOutput.ScrollToEnd();
+
             }));
         }
 
@@ -246,6 +202,7 @@ namespace TaskRunner
                 txtOutput.AppendText("----- Build Success ----- ^_^ -----");
                 txtOutput.AppendText(Environment.NewLine);
                 txtOutput.ScrollToEnd();
+                
             }));
 
 

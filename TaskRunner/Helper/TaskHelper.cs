@@ -3,35 +3,36 @@ using TaskRunner.Events;
 using TaskRunner.EventHandler;
 using System;
 using TaskRunner.Misc;
+using Microsoft.Practices.Unity;
+using Microsoft.Practices.Unity.Configuration;
+using System.Configuration;
 
 namespace TaskRunner.Helper
 {
     public class TaskHelper
     {
-        //public static void Build(BuildEventInput input)
-        //{
-        //    var eventDisPatcher = new EventDispatcher<BuildEventInput>(input);
-        //    eventDisPatcher.Execute(new Handler.Build());
-        //}
-
-        //public static void Copy(CopyEventInput input)
-        //{
-        //    var eventDisPatcher = new EventDispatcher<CopyEventInput>(input);
-        //    eventDisPatcher.Execute(new Handler.Copy());
-        //}
-
-        //public static void Powershell(PowershellEventInput input)
-        //{
-        //    var eventDisPatcher = new EventDispatcher<PowershellEventInput>(input);
-        //    eventDisPatcher.Execute(new PowershellCommand());
-        //}
-
         public static void Execute(Event input)
         {
-            var t = Util.ResolveHandler<Event, IEventHandler<Event>>(Enum.GetName(typeof(EventTypeEnum), input.Type));
+            var handler = ResolveHandler(input);
 
-            var eventDisPatcher = new EventDispatcher<Event>(input);
-            eventDisPatcher.Execute((IEventHandler<Event>)Activator.CreateInstance(typeof(IEventHandler<Event>)));
+            if (handler != null)
+            {
+                handler.Execute();
+            }
+         }
+
+        private static IEventHandler ResolveHandler(Event type)
+        {
+            IUnityContainer container = new UnityContainer();
+            var config = (UnityConfigurationSection)ConfigurationManager.GetSection("unity");
+            container.LoadConfiguration(config);
+
+            var enumType = Util.GetEnumValue(type.Type);
+
+            return container.Resolve<IEventHandler>(enumType, new ResolverOverride[]
+                                   {
+                                       new ParameterOverride(enumType,type)
+                                   });
         }
     }
 }

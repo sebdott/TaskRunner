@@ -51,7 +51,7 @@ namespace TaskRunner
                 {
                     case "tbCopy":
                         eventInd.Type = EventTypeEnum.Copy;
-                        eventInd.CopyEvent = new Copy()
+                        eventInd.CopyEvent = new CopyEvent()
                         {
                             SourcePath = txtCopySourcePath.Text,
                             DestinationPath = txtCopyDestinationPath.Text,
@@ -72,14 +72,14 @@ namespace TaskRunner
                         break;
                     case "tbBuild":
                         eventInd.Type = EventTypeEnum.Build;
-                        eventInd.BuildEvent = new Build()
+                        eventInd.BuildEvent = new BuildEvent()
                         {
                             SolutionPath = txtBuildSolutionPath.Text
                         };
                         break;
                     case "tbPowershell":
                         eventInd.Type = EventTypeEnum.Powershell;
-                        eventInd.PowershellEvent = new Powershell()
+                        eventInd.PowershellEvent = new PowershellEvent()
                         {
                             Message = txtPowershellMessage.Text
                         };

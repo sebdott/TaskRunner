@@ -27,14 +27,7 @@ namespace TaskRunner.Events
                     this.IsIISReset = XmlConvert.ToBoolean(value);
             }
         }
-        [XmlIgnore]
-        public EventHandler<DataAddedEventArgs> OutputCollection_DataAdded { get; set; }
-        [XmlIgnore]
-        public EventHandler<DataAddedEventArgs> Error_DataAdded { get; set; }
-        [XmlIgnore]
-        public EventHandler<EventArgs> IsCompleted { get; set; }
-        [XmlIgnore]
-        public EventHandler<EventArgs> IsFailed { get; set; }
+   
 
         [XmlIgnore]
         public override string DetailsDescription

@@ -5,6 +5,7 @@ using System.Xml;
 using System.Xml.Serialization;
 using TaskRunner.Misc;
 using System.Text;
+using System.Management.Automation;
 
 namespace TaskRunner.Events
 {
@@ -59,7 +60,18 @@ namespace TaskRunner.Events
                 if (PropertyChanged != null) PropertyChanged(this, new PropertyChangedEventArgs("Status"));
             }
         }
+
         
+        
+        [XmlIgnore]
+        public virtual EventHandler<DataAddedEventArgs> OutputCollection_DataAdded { get; set; }
+        [XmlIgnore]
+        public virtual EventHandler<DataAddedEventArgs> Error_DataAdded { get; set; }
+        [XmlIgnore]
+        public virtual EventHandler<EventArgs> IsCompleted { get; set; }
+        [XmlIgnore]
+        public virtual EventHandler<EventArgs> IsFailed { get; set; }
+
         [XmlIgnore]
         public virtual string DetailsDescription
         {
@@ -70,5 +82,6 @@ namespace TaskRunner.Events
                 return sb.ToString();
             }
         }
+
     }
 }

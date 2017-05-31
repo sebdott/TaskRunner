@@ -57,8 +57,6 @@ namespace TaskRunner.Events
         public string DestinationPath { get; set; }
         [XmlIgnore]
         public EventHandler<CopyEventArgs> IsCompleted { get; set; }
-        [XmlIgnore]
-        public EventHandler<EventArgs> IsFailed { get; set; }
 
         [XmlIgnore]
         public override string DetailsDescription

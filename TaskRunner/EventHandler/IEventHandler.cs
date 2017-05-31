@@ -3,8 +3,8 @@ using TaskRunner.Events;
 
 namespace TaskRunner.Handler
 {
-    public interface IEventHandler<TEventInput> where TEventInput : Event
+    public interface IEventHandler
     {
-        void Execute(TEventInput evenInput);
+        void Execute();
     }
 }

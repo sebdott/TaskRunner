@@ -7,7 +7,7 @@ using TaskRunner.Properties;
 
 namespace TaskRunner.Handler
 {
-    public class BuildHandler : IEventHandler<Build>
+    public class BuildHandler : IEventHandler
     {
         private readonly int timeout;
         private readonly string powershellScriptPath;
@@ -19,15 +19,17 @@ namespace TaskRunner.Handler
 
         public event EventHandler<EventArgs> IsFailed;
 
-        public BuildHandler()
+        public Build buildEventInput;
+        public BuildHandler(Build Build)
         {
             timeout = Settings.Default.ExecutionTimeOutInSeconds;
             powershellScriptPath = Settings.Default.PowershellScriptPath;
             cakeScriptPath = Settings.Default.CakeScriptPath;
             timeoutTS = new TimeSpan(0, 0, 0, timeout);
+            buildEventInput = Build;
         }
 
-        public void Execute(Build buildEventInput)
+        public void Execute()
         {
             IsCompleted += buildEventInput.IsCompleted;
             IsFailed += buildEventInput.IsFailed;

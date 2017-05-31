@@ -7,7 +7,7 @@ using System.Threading;
 
 namespace TaskRunner.Handler
 {
-    public class PowershellHandler : IEventHandler<PowershellRun>
+    public class PowershellHandler : IEventHandler
     {
         private readonly int timeout;
         private readonly string powershellScriptPath;
@@ -17,16 +17,18 @@ namespace TaskRunner.Handler
 
         public event EventHandler<EventArgs> IsCompleted;
         public event EventHandler<EventArgs> IsFailed;
+        public PowershellRun runPowershellInput;
 
-        public PowershellHandler()
+        public PowershellHandler(PowershellRun PowershellRun)
         {
             timeout = Settings.Default.ExecutionTimeOutInSeconds;
             powershellScriptPath = Settings.Default.PowershellScriptPath;
             cakeScriptPath = Settings.Default.CakeScriptPath;
             timeoutTS = new TimeSpan(0, 0, 0, timeout);
+            runPowershellInput = PowershellRun;
         }
 
-        public void Execute(PowershellRun runPowershellInput)
+        public void Execute()
         {
             IsCompleted += runPowershellInput.IsCompleted;
             IsFailed += runPowershellInput.IsFailed;
